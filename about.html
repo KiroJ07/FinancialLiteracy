@@ -102,17 +102,21 @@
   </footer>
 
   <script>
+    function handleImgError(img) {
+      img.style.display = 'none';
+      if (!img.nextElementSibling || !img.nextElementSibling.classList.contains('img-error')) {
+        var notice = document.createElement('p');
+        notice.className = 'img-error';
+        notice.textContent = 'Image could not be loaded: ' + (img.alt || img.src.split('/').pop());
+        notice.style.cssText = 'color:#666;font-style:italic;padding:10px;border:1px dashed #ccc;border-radius:8px;display:inline-block;';
+        img.parentNode.insertBefore(notice, img.nextSibling);
+      }
+    }
     document.querySelectorAll('img').forEach(function(img) {
-      img.addEventListener('error', function() {
-        this.style.display = 'none';
-        if (!this.nextElementSibling || !this.nextElementSibling.classList.contains('img-error')) {
-          var notice = document.createElement('p');
-          notice.className = 'img-error';
-          notice.textContent = 'Image could not be loaded: ' + (this.alt || this.src.split('/').pop());
-          notice.style.cssText = 'color:#666;font-style:italic;padding:10px;border:1px dashed #ccc;border-radius:8px;display:inline-block;';
-          this.parentNode.insertBefore(notice, this.nextSibling);
-        }
-      });
+      img.addEventListener('error', function() { handleImgError(this); });
+      if (img.complete && img.naturalWidth === 0 && img.src) {
+        handleImgError(img);
+      }
     });
   </script>
 </body>
