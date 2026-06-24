@@ -1,0 +1,91 @@
+/* Theme definitions */
+:root {
+  --color-header: #1a73e8;
+  --color-nav: #2a8bf2;
+  --color-footer: #2a8bf2;
+  --color-heading: #1a73e8;
+  --color-bg: #f0f4f8;
+  --color-text: #000;
+  --font-family: 'Poppins', sans-serif;
+  --font-weight-nav: 600;
+  --line-height: 1.6;
+}
+
+[data-theme="formal"] {
+  --color-header: #0f4ab4;
+  --color-nav: #1a5df0;
+  --color-footer: #1a5df0;
+  --color-heading: #0f4ab4;
+  --color-bg: #ffffff;
+  --color-text: #222;
+  --font-family: 'Merriweather', serif;
+  --font-weight-nav: 700;
+  --line-height: 1.8;
+}
+
+/* Base reset */
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  margin: 0;
+  padding: 0;
+  line-height: var(--line-height);
+}
+
+/* Header */
+header {
+  background-color: var(--color-header);
+  color: white;
+  text-align: center;
+  padding: 50px 20px;
+  font-size: 2.5rem;
+}
+
+/* Navigation */
+nav {
+  background-color: var(--color-nav);
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 15px 0;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: var(--font-weight-nav);
+  font-size: 1.1rem;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Main content container */
+.container {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 30px;
+}
+
+/* Headings */
+h2 {
+  color: var(--color-heading);
+  font-size: 2rem;
+}
+
+/* Paragraphs */
+p {
+  font-size: 1.1rem;
+  max-width: 900px;
+}
+
+/* Footer */
+footer {
+  background-color: var(--color-footer);
+  color: white;
+  text-align: center;
+  padding: 25px;
+  margin-top: 50px;
+}
