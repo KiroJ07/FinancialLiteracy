@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>About Financial Literacy</title>
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet" onerror="this.remove()" />
   <style>
     body {
-      font-family: 'Merriweather', serif;
+      font-family: 'Merriweather', Georgia, 'Times New Roman', serif;
       background-color: #ffffff;
       color: #222;
       margin: 0;
@@ -91,14 +91,29 @@
     <a href="https://www.idrlabs.com/money-personality-type/test.php">https://www.idrlabs.com/money-personality-type/test.php</a> <br>
     Short Link: bit.ly/4mksrq0 <br>
     Or Scan this QR Code! <br>
-    <img class="qr" src="qr.png" alt=""> <br>
+    <img class="qr" src="qr.png" alt="QR code linking to the money personality type test"> <br>
     <br>
     <p>How the test determines your personality?</p>
-    <img class="test" src="test-result.png" alt="">
+    <img class="test" src="test-result.png" alt="Chart showing how the money personality test determines your result">
   </div>
 
   <footer>
     &copy; 2025 Youth Financial Literacy
   </footer>
+
+  <script>
+    document.querySelectorAll('img').forEach(function(img) {
+      img.addEventListener('error', function() {
+        this.style.display = 'none';
+        if (!this.nextElementSibling || !this.nextElementSibling.classList.contains('img-error')) {
+          var notice = document.createElement('p');
+          notice.className = 'img-error';
+          notice.textContent = 'Image could not be loaded: ' + (this.alt || this.src.split('/').pop());
+          notice.style.cssText = 'color:#666;font-style:italic;padding:10px;border:1px dashed #ccc;border-radius:8px;display:inline-block;';
+          this.parentNode.insertBefore(notice, this.nextSibling);
+        }
+      });
+    });
+  </script>
 </body>
 </html>

@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Contact Us</title>
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet" onerror="this.remove()" />
   <style>
     body {
-      font-family: 'Merriweather', serif;
+      font-family: 'Merriweather', Georgia, 'Times New Roman', serif;
       background-color: #ffffff;
       color: #222;
       margin: 0;
@@ -53,6 +53,77 @@
       padding: 25px;
       margin-top: 50px;
     }
+    .contact-form {
+      max-width: 500px;
+      margin-top: 20px;
+    }
+    .contact-form label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      outline: none;
+      border-color: #0f4ab4;
+      box-shadow: 0 0 0 2px rgba(15, 74, 180, 0.2);
+    }
+    .contact-form input.invalid,
+    .contact-form textarea.invalid {
+      border-color: #d93025;
+      box-shadow: 0 0 0 2px rgba(217, 48, 37, 0.2);
+    }
+    .contact-form .field-error {
+      color: #d93025;
+      font-size: 0.85rem;
+      margin-top: 4px;
+      display: none;
+    }
+    .contact-form button {
+      margin-top: 20px;
+      padding: 12px 30px;
+      background-color: #0f4ab4;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-family: inherit;
+      cursor: pointer;
+    }
+    .contact-form button:hover {
+      background-color: #0d3a8e;
+    }
+    .form-status {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 6px;
+      display: none;
+      font-size: 0.95rem;
+    }
+    .form-status.success {
+      display: block;
+      background-color: #e6f4ea;
+      color: #137333;
+      border: 1px solid #137333;
+    }
+    .form-status.error {
+      display: block;
+      background-color: #fce8e6;
+      color: #d93025;
+      border: 1px solid #d93025;
+    }
   </style>
 </head>
 <body>
@@ -72,11 +143,106 @@
     <a href="mailto:financial-literacy@mail.com">financial-literacy@mail.com</a> <br>
     Phone number: 012-000-0000
   </p>
-  <br><br><br>
+
+    <form class="contact-form" id="contactForm" novalidate>
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required placeholder="Your name" />
+      <p class="field-error" id="nameError">Please enter your name.</p>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required placeholder="you@example.com" />
+      <p class="field-error" id="emailError">Please enter a valid email address.</p>
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message" rows="5" required placeholder="Your message..."></textarea>
+      <p class="field-error" id="messageError">Please enter a message.</p>
+
+      <button type="submit">Send Message</button>
+      <div class="form-status" id="formStatus"></div>
+    </form>
+  <br>
   </div>
 
   <footer>
     &copy; 2025 Youth Financial Literacy
   </footer>
+
+  <script>
+    (function() {
+      var form = document.getElementById('contactForm');
+      var status = document.getElementById('formStatus');
+
+      function showFieldError(inputId, errorId) {
+        var input = document.getElementById(inputId);
+        var error = document.getElementById(errorId);
+        input.classList.add('invalid');
+        error.style.display = 'block';
+      }
+
+      function clearFieldError(inputId, errorId) {
+        var input = document.getElementById(inputId);
+        var error = document.getElementById(errorId);
+        input.classList.remove('invalid');
+        error.style.display = 'none';
+      }
+
+      // Clear errors on input
+      ['name', 'email', 'message'].forEach(function(field) {
+        var el = document.getElementById(field);
+        el.addEventListener('input', function() {
+          clearFieldError(field, field + 'Error');
+          status.className = 'form-status';
+          status.style.display = 'none';
+        });
+      });
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var valid = true;
+
+        var name = document.getElementById('name').value.trim();
+        var email = document.getElementById('email').value.trim();
+        var message = document.getElementById('message').value.trim();
+
+        // Validate name
+        if (!name) {
+          showFieldError('name', 'nameError');
+          valid = false;
+        } else {
+          clearFieldError('name', 'nameError');
+        }
+
+        // Validate email
+        var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email || !emailPattern.test(email)) {
+          showFieldError('email', 'emailError');
+          valid = false;
+        } else {
+          clearFieldError('email', 'emailError');
+        }
+
+        // Validate message
+        if (!message) {
+          showFieldError('message', 'messageError');
+          valid = false;
+        } else {
+          clearFieldError('message', 'messageError');
+        }
+
+        if (!valid) {
+          status.className = 'form-status error';
+          status.textContent = 'Please fix the errors above before submitting.';
+          status.style.display = 'block';
+          return;
+        }
+
+        // Simulate submission (no backend)
+        status.className = 'form-status success';
+        status.textContent = 'Thank you, ' + name + '! Your message has been received.';
+        status.style.display = 'block';
+        form.reset();
+      });
+    })();
+  </script>
 </body>
 </html>
