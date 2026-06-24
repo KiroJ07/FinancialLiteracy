@@ -1,0 +1,14 @@
+{
+  "name": "financial-literacy-tests",
+  "version": "1.0.0",
+  "description": "Unit tests for the Youth Financial Literacy static website",
+  "scripts": {
+    "test": "jest --coverage",
+    "test:verbose": "jest --coverage --verbose"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "@jest/globals": "^29.7.0"
+  }
+}
